@@ -26,7 +26,6 @@
  *
  */
 const Logger = require('dw/system/Logger');
-const Calendar = require('dw/util/Calendar');
 const StringUtils = require('dw/util/StringUtils');
 const CustomObjectMgr = require('dw/object/CustomObjectMgr');
 
@@ -61,8 +60,7 @@ function notify(notificationData) {
   try {
     const msg = createLogMessage(notificationData);
     Logger.getLogger('Adyen').debug(msg);
-    const calObj = new Calendar();
-    const keyValue = `${notificationData.merchantReference}-${StringUtils.formatCalendar(calObj, 'yyyyMMddhhmmssSSS')}`;
+    const keyValue = `${notificationData.merchantReference}-${new Date().getTime()}`;
     const customObj = CustomObjectMgr.createCustomObject(
       'adyenNotification',
       keyValue,
