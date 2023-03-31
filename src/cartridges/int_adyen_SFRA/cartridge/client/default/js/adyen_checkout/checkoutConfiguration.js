@@ -13,6 +13,10 @@ function getCardConfig() {
   return {
     enableStoreDetails: window.showStoreDetails,
     showBrandsUnderCardNumber: false,
+    clickToPayConfiguration: {
+      shopperEmail: '...',
+      merchantDisplayName: '...',
+    },
     onChange(state) {
       store.isValid = state.isValid;
       const method = state.data.paymentMethod.storedPaymentMethodId
@@ -20,6 +24,13 @@ function getCardConfig() {
         : store.selectedMethod;
       store.updateSelectedPayment(method, 'isValid', store.isValid);
       store.updateSelectedPayment(method, 'stateData', state.data);
+    },
+    onSubmit: (state, component) => {
+      console.log(state);
+      console.log(component);
+      helpers.assignPaymentMethodValue();
+      document.querySelector('button[value="submit-payment"]').disabled = false;
+      document.querySelector('button[value="submit-payment"]').click();
     },
     onFieldValid,
     onBrand,
